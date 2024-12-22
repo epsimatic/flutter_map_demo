@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:glive_minimal/state_app.dart';
+import 'package:glive_minimal/page_login.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -16,10 +17,12 @@ class MyApp extends StatelessWidget {
       create: (context) => AppState(),
       child: MaterialApp(
         title: 'GLive-minimal',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
-        useMaterial3: true,
-      ),
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
+          useMaterial3: true,
+        ),
+        // home: const DemoPage(title: 'Flutter Demo Page'),
+        home: const LoginPage(),
       ),
     );
   }
