@@ -6,6 +6,8 @@ class AppState extends ChangeNotifier {
   var password = "";
   var isLoggedIn = false;
 
+  var savedItems = <String>[];
+
   bool login() {
     if (username == "root" && password == "root") {
       error = "";
