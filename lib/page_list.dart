@@ -4,30 +4,60 @@ import 'package:provider/provider.dart';
 
 class ListPage extends StatelessWidget {
   const ListPage({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
-    if (!appState.isLoggedIn) return const Placeholder(color: Colors.red,);
-    
-    return Scaffold(
-      body: 
-        appState.savedItems.isEmpty ? 
-          Center(child: Text('Нет сохранённых точек')) :
-          ListView.builder(
-              itemCount: appState.savedItems.length,
-              itemBuilder: (context, index) {
-                var savedItem = appState.savedItems[index];
-                return Text(savedItem);
-              },
-            ),
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: () { 
-          Navigator.pop(context);          
+    Widget body;
+    if (!appState.isLoggedIn) {
+      body = const Center(child: Text("Вы не авторизованы"));
+    } else if (appState.savedPoints.isEmpty) {
+      body = const Center(child: Text('Нет сохранённых точек'));
+    } else {
+      body = ListView.builder(
+        itemCount: appState.savedPoints.length,
+        itemBuilder: (context, index) {
+          MapEntry entry = appState.savedPoints.entries.elementAt(index);
+          return PointTile(point: entry, state: appState);
         },
-        tooltip: 'Назад',
-        child: const Icon(Icons.arrow_back)
+      );
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        leading: BackButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: Text('Список точек'),
+      ),
+      body: body,
+    );
+  }
+}
+
+class PointTile extends StatelessWidget {
+  const PointTile({
+    super.key,
+    required this.point,
+    required this.state,
+  });
+
+  final MapEntry point;
+  final AppState state;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text('${point.key}'),
+      subtitle: Text('${point.value}'),
+      trailing: ElevatedButton(
+        child: const Text("Удалить"),
+        onPressed: () {
+          state.deleteItem(point.key);
+        },
       ),
     );
   }
