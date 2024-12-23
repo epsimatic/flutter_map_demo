@@ -1,16 +1,17 @@
 import 'package:flutter/foundation.dart';
+import 'package:latlong2/latlong.dart';
 
 class AppState extends ChangeNotifier {
   var error = "";
   var username = "";
   var password = "";
-  var isLoggedIn = false;
+  var isLoggedIn = true;
 
-  var savedPoints = <String, dynamic>{
-    'точка 1': '36, 56',
-    'точка 2': '37, 54',
-    'точка 3': '36.5, 55.5',
-    'точка 4': '36.2, 55.1', 
+  var savedPoints = <String, LatLng>{
+    'точка 1': LatLng(56.836481, 60.595780),
+    'точка 2': LatLng(56.839342, 60.611316),
+    'точка 3': LatLng(56.839170, 60.614111),
+    'точка 4': LatLng(56.833866, 60.606827),
   };
 
   bool deleteItem(String key) {
@@ -21,11 +22,7 @@ class AppState extends ChangeNotifier {
     return true;
   }
 
-  bool addItem(dynamic value) {
-    if (value == null || value.isEmpty) {
-      return false;
-    }
-
+  bool addItem(LatLng value) {
     savedPoints[_generateName()] = value;
     notifyListeners();
     return true;
