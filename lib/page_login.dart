@@ -22,6 +22,7 @@ class LoginPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
+                keyboardType: TextInputType.emailAddress,
                 onChanged: (value) => appState.username = value,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -34,6 +35,8 @@ class LoginPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
+                keyboardType: TextInputType.visiblePassword,
+                obscureText: true,
                 onChanged: (value) => appState.password = value,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
