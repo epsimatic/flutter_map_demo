@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:glive_minimal/state_app.dart';
-import 'package:glive_minimal/widget_boxed_display.dart';
+import 'package:glive_minimal/widget_error_message.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
@@ -14,33 +14,32 @@ class LoginPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (appState.error != "") BoxedDisplay(title: appState.error),
+            if (appState.error != "") ErrorMessage(title: appState.error),
 
             // TODO: Format as table
-            // Row(
-            //   mainAxisSize: MainAxisSize.min,
-            //   children: [
-            //     Text("Логин"),
-            //     const SizedBox(width: 10),
-            //     Text("LOGIN"),
-            //   ],
-            // ),
+
 
             const Text("Логин:"),
-            TextField(
-              onChanged: (value) => appState.username = value,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'email/username',
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                onChanged: (value) => appState.username = value,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'email/username',
+                ),
               ),
             ),
 
             const Text("Пароль:"),
-            TextField(
-              onChanged: (value) => appState.password = value,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: '********',
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                onChanged: (value) => appState.password = value,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: '********',
+                ),
               ),
             ),
 
