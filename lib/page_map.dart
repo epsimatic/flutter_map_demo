@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:glive_minimal/page_list.dart';
 import 'package:glive_minimal/state_app.dart';
 import 'package:provider/provider.dart';
 import 'package:latlong2/latlong.dart';
@@ -38,8 +39,10 @@ class MapPage extends StatelessWidget {
                   icon: Icon(Icons.list),
                   tooltip: "Список точек",
                   onPressed: () {
-                    // TODO: Navigate to the list page
-                    print("Navigating to list");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ListPage()),
+                  );
                   },
                 ),
               ],

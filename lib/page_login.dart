@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:glive_minimal/page_map.dart';
 import 'package:glive_minimal/state_app.dart';
 import 'package:glive_minimal/widget_error_message.dart';
 import 'package:provider/provider.dart';
@@ -17,8 +18,6 @@ class LoginPage extends StatelessWidget {
             if (appState.error != "") ErrorMessage(title: appState.error),
 
             // TODO: Format as table
-
-
             const Text("Логин:"),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -45,7 +44,12 @@ class LoginPage extends StatelessWidget {
 
             ElevatedButton(
               onPressed: () {
-                appState.login();
+                if (appState.login()) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MapPage()),
+                  );
+                }
               },
               child: Text('Войти'),
             ),
