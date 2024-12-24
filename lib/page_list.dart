@@ -52,7 +52,7 @@ class PointTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text('${point.key}'),
-      subtitle: Text('${point.value}'),
+      subtitle: Text('${point.value.latitude}, ${point.value.longitude}'),
       trailing: ElevatedButton(
         child: const Text("Удалить"),
         onPressed: () {

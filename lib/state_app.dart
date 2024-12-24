@@ -5,7 +5,7 @@ class AppState extends ChangeNotifier {
   var error = "";
   var username = "";
   var password = "";
-  var isLoggedIn = true;
+  var isLoggedIn = false;
 
   var savedPoints = <String, LatLng>{
     'точка 1': LatLng(56.836481, 60.595780),
