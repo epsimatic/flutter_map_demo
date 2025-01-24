@@ -1,0 +1,116 @@
+name: Flutter workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-24.04 # or ubuntu-24.04-arm
+    timeout-minutes: 3
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version-file: pubspec.yaml
+          cache: true
+
+      - name: Disable analytics
+        run: |
+          flutter --disable-analytics
+          dart --disable-analytics
+
+      - name: "DEBUG: Flutter state"
+        run: flutter doctor -v
+
+      - name: Get dependencies
+        run: | 
+          flutter pub get
+          flutter pub outdated
+
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Flutter Analyze
+        run: flutter analyze --no-pub --no-fatal-infos --fatal-warnings
+
+      # - name: Flutter Test
+      #   run: flutter test
+
+  build_apk:
+    name: Build APK
+    needs: analyze
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version-file: pubspec.yaml
+          cache: true
+
+      - name: Disable analytics
+        run: |
+          flutter --disable-analytics
+          dart --disable-analytics
+
+      - name: Get dependencies
+        run: flutter pub get
+
+
+      - name: Set up Java & Gradle cache
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17' # FIXME: parse Java version from Flutter configuration
+          cache: 'gradle'
+
+
+      # - name: Get metadata from pubspec
+      #   uses: altive/pubspec-metadata@v1
+      #   id: pubspec
+      #     # echo ${{ steps.pubspec.outputs.name }}
+      #     # echo ${{ steps.pubspec.outputs.version-number }}
+      #     # echo ${{ steps.pubspec.outputs.build-number }}
+
+      - name: Generate APK name
+        run: |
+          GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-7)
+          APP_NAME=$(yq e '.name' pubspec.yaml)
+          APP_VERSION=$(yq e '.version' pubspec.yaml)
+          echo "APP_FILENAME=${APP_NAME}-${APP_VERSION}-beta_${GITHUB_SHA_SHORT}" >> $GITHUB_ENV
+
+
+      - name: Build APK for ${{ env.APP_FILENAME }}
+        # https://github.com/flutter/flutter/issues/29509#issuecomment-762274977
+        # "--obfuscate" can only be used in combination with "--split-debug-info"
+        run: |
+          flutter build apk --no-pub
+          mv -v build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/$APP_FILENAME.apk
+
+      # - run: flutter build appbundle
+
+      - name: Store APK as artifact
+        uses: actions/upload-artifact@v4
+        # https://github.com/actions/upload-artifact
+        # Artifacts are retained for 90 days by default
+        with:
+          name: "${{ env.APP_FILENAME }}.apk"
+          path: "build/app/outputs/flutter-apk/${{ env.APP_FILENAME }}.apk"
+          if-no-files-found: error
+
+      - name: "DEBUG: Flutter state"
+        run: flutter doctor -v
+
