@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:glive_minimal/state_app.dart';
+import 'package:flutter_map_demo/state_app.dart';
 import 'package:provider/provider.dart';
 
 class ListPage extends StatelessWidget {

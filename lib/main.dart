@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:glive_minimal/page_login.dart';
-import 'package:glive_minimal/state_app.dart';
+import 'package:flutter_map_demo/page_login.dart';
+import 'package:flutter_map_demo/state_app.dart';
 import 'package:provider/provider.dart';
 
 void main() {

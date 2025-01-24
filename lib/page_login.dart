@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:glive_minimal/page_map.dart';
-import 'package:glive_minimal/state_app.dart';
-import 'package:glive_minimal/widget_error_message.dart';
+import 'package:flutter_map_demo/page_map.dart';
+import 'package:flutter_map_demo/state_app.dart';
+import 'package:flutter_map_demo/widget_error_message.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
