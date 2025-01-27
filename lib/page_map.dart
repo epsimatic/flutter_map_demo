@@ -28,7 +28,8 @@ class MapPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton.filled(
-                  icon: const Icon(Icons.add_location, semanticLabel: "Добавить точку"),
+                  icon: const Icon(Icons.add_location,
+                      semanticLabel: "Добавить точку"),
                   tooltip: "Добавить точку",
                   onPressed: () {
                     appState.addItem(map.getPoint());
@@ -39,10 +40,10 @@ class MapPage extends StatelessWidget {
                   icon: Icon(Icons.list),
                   tooltip: "Список точек",
                   onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ListPage()),
-                  );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ListPage()),
+                    );
                   },
                 ),
               ],
@@ -67,7 +68,7 @@ class MapWidget extends StatelessWidget {
     List<Marker> allMarkers = [];
     var appState = context.watch<AppState>();
     var center = LatLng(56.838248, 60.606589);
-    for(var i=0; i < appState.savedPoints.length; i++) {
+    for (var i = 0; i < appState.savedPoints.length; i++) {
       var point = appState.savedPoints.entries.elementAt(i);
       allMarkers.add(Marker(
         point: point.value,
@@ -79,7 +80,7 @@ class MapWidget extends StatelessWidget {
             Icon(Icons.location_pin),
           ],
         ),
-       ));
+      ));
     }
     return FlutterMap(
       mapController: _mapController,

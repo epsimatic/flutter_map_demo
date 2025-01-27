@@ -15,8 +15,8 @@ class AppState extends ChangeNotifier {
   };
 
   bool deleteItem(String key) {
-    if (! savedPoints.containsKey(key)) return false;
-    
+    if (!savedPoints.containsKey(key)) return false;
+
     savedPoints.remove(key);
     notifyListeners();
     return true;
@@ -39,11 +39,11 @@ class AppState extends ChangeNotifier {
     notifyListeners();
     return isLoggedIn;
   }
-  
+
   static final _prefix = "точка ";
   String _generateName() {
-    for (var i = 1; ; ++i) {
-      if (! savedPoints.containsKey(_prefix + i.toString())) {
+    for (var i = 1;; ++i) {
+      if (!savedPoints.containsKey(_prefix + i.toString())) {
         return _prefix + i.toString();
       }
     }

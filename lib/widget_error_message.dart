@@ -19,7 +19,8 @@ class ErrorMessage extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.error_outline, color: theme.colorScheme.onErrorContainer),
+            Icon(Icons.error_outline,
+                color: theme.colorScheme.onErrorContainer),
             SizedBox(width: 5),
             Text(
               title,
